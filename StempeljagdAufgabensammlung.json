@@ -1,0 +1,212 @@
+[
+    {
+        "Stationsnummer": 1,
+        "Stationsname": "Hausbewohner",
+        "Stationsbeschreibung": "Einsteinrätsel",
+        "Stationslösung": "siehe Blatt",
+        "Autor": "Marijke"
+    },
+    {
+        "Stationsnummer": 2,
+        "Stationsname": "Kreuz ziehen",
+        "Stationsbeschreibung": "Kreuz suchen",
+        "Stationslösung": "Kreuz bringen",
+        "Autor": "Dominik"
+    },
+    {
+        "Stationsnummer": 3,
+        "Stationsname": "Kreuzworträtsel",
+        "Stationsbeschreibung": "Kreuzworträtsel",
+        "Stationslösung": "Messdiener",
+        "Autor": "Freya"
+    },
+    {
+        "Stationsnummer": 4,
+        "Stationsname": "Codeknacker",
+        "Stationsbeschreibung": "Code knacken",
+        "Stationslösung": "6 13 15 11 33",
+        "Autor": "Mathis"
+    },
+    {
+        "Stationsnummer": 5,
+        "Stationsname": "Puzzle",
+        "Stationsbeschreibung": "Puzzle",
+        "Stationslösung": "Bild vom Puzzle",
+        "Autor": "Jacqueline"
+    },
+    {
+        "Stationsnummer": 6,
+        "Stationsname": "Puzzleball",
+        "Stationsbeschreibung": "Puzzleball",
+        "Stationslösung": "Bild vom Puzzleball",
+        "Autor": "Jacqueline"
+    },
+    {
+        "Stationsnummer": 7,
+        "Stationsname": "Sortieren",
+        "Stationsbeschreibung": "Leiter",
+        "Stationslösung": "siehe Bild",
+        "Autor": "Andre"
+    },
+    {
+        "Stationsnummer": 8,
+        "Stationsname": "Freizeithäuser",
+        "Stationsbeschreibung": "Häuser sortieren",
+        "Stationslösung": "siehe Bild",
+        "Autor": "Jenny"
+    },
+    {
+        "Stationsnummer": 9,
+        "Stationsname": "Lückentext",
+        "Stationsbeschreibung": "Lückentext einfach",
+        "Stationslösung": "siehe Lückentext",
+        "Autor": "Pascal"
+    },
+    {
+        "Stationsnummer": 10,
+        "Stationsname": "Tippspiel",
+        "Stationsbeschreibung": "EM Tippspiel",
+        "Stationslösung": "siehe Bild",
+        "Autor": "Lilly"
+    },
+    {
+        "Stationsnummer": 11,
+        "Stationsname": "Wörterrätsel",
+        "Stationsbeschreibung": "Wörterrätsel",
+        "Stationslösung": "Kindheit",
+        "Autor": "Kira"
+    },
+    {
+        "Stationsnummer": 12,
+        "Stationsname": "Sudoku",
+        "Stationsbeschreibung": "Sudoku",
+        "Stationslösung": "siehe Bild",
+        "Autor": "Luca Marie"
+    },
+    {
+        "Stationsnummer": 13,
+        "Stationsname": "Knobelaufgabe",
+        "Stationsbeschreibung": "Knobel",
+        "Stationslösung": "siehe Blatt",
+        "Autor": "Merlin"
+    },
+    {
+        "Stationsnummer": 14,
+        "Stationsname": "Pyramide",
+        "Stationsbeschreibung": "Pyramide",
+        "Stationslösung": "Foto von Pyramide",
+        "Autor": "Nicolas"
+    },
+    {
+        "Stationsnummer": 15,
+        "Stationsname": "Schwedenrätsel",
+        "Stationsbeschreibung": "Schwedenrätsel",
+        "Stationslösung": "Paraphernalien",
+        "Autor": "Luca Mohr"
+    },
+    {
+        "Stationsnummer": 16,
+        "Stationsname": "Heimatkunde",
+        "Stationsbeschreibung": "Fotos EuZ",
+        "Stationslösung": "DKAHEBGCLFIJ",
+        "Autor": "Gerhard"
+    },
+    {
+        "Stationsnummer": 17,
+        "Stationsname": "Rechtschreibung",
+        "Stationsbeschreibung": "Text",
+        "Stationslösung": "17",
+        "Autor": "Gerhard"
+    },
+    {
+        "Stationsnummer": 18,
+        "Stationsname": "Origami",
+        "Stationsbeschreibung": "Falten",
+        "Stationslösung": "Herz abgeben",
+        "Autor": "Christina"
+    },
+    {
+        "Stationsnummer": 19,
+        "Stationsname": "Mathe Rally",
+        "Stationsbeschreibung": "rechnen",
+        "Stationslösung": "99",
+        "Autor": "Katja"
+    },
+    {
+        "Stationsnummer": 20,
+        "Stationsname": "Kreuzworträtsel",
+        "Stationsbeschreibung": "Kreuzworträtsel",
+        "Stationslösung": "Terrarium",
+        "Autor": "Katja"
+    },
+    {
+        "Stationsnummer": 21,
+        "Stationsname": "Buchstabenrätsel",
+        "Stationsbeschreibung": "Buchstabenrätsel",
+        "Stationslösung": "Ich hab die Freck",
+        "Autor": "Nele"
+    },
+    {
+        "Stationsnummer": 22,
+        "Stationsname": "Palindrom",
+        "Stationsbeschreibung": "Datum",
+        "Stationslösung": "03.02.2030",
+        "Autor": "David"
+    },
+    {
+        "Stationsnummer": 23,
+        "Stationsname": "Das Kartenhaus",
+        "Stationsbeschreibung": "Kartenhaus bauen",
+        "Stationslösung": "Bild von Kartenhaus",
+        "Autor": "Matthias"
+    },
+    {
+        "Stationsnummer": 24,
+        "Stationsname": "Wie lang ist das Seil",
+        "Stationsbeschreibung": "Messen",
+        "Stationslösung": "16,31m (16,25-16,37)",
+        "Autor": "Matthias"
+    },
+    {
+        "Stationsnummer": 25,
+        "Stationsname": "Würfelglück oder Können",
+        "Stationsbeschreibung": "Würfeln",
+        "Stationslösung": "Bild von Augensumme 50",
+        "Autor": "Matthias"
+    },
+    {
+        "Stationsnummer": 26,
+        "Stationsname": "543!",
+        "Stationsbeschreibung": "zählen mit Gerät",
+        "Stationslösung": "Bild von 543 Counts",
+        "Autor": "Matthias"
+    },
+    {
+        "Stationsnummer": 27,
+        "Stationsname": "Servietten",
+        "Stationsbeschreibung": "Servietten fragen",
+        "Stationslösung": "Serviettenformen",
+        "Autor": "Lennart"
+    },
+    {
+        "Stationsnummer": 28,
+        "Stationsname": "Geschenk",
+        "Stationsbeschreibung": "Geschenk",
+        "Stationslösung": "Geschenk",
+        "Autor": "Lennart"
+    },
+    {
+        "Stationsnummer": 29,
+        "Stationsname": "Malen",
+        "Stationsbeschreibung": "Jeder malt nacheinander einen Strich. Es geht immer reihum. Insgesamt soll ein Stirnlappenbasilisk gemalt werden",
+        "Stationslösung": "Bild eines Stirnlappenbasilisk",
+        "Autor": "Lennart"
+    },
+    {
+        "Stationsnummer": 30,
+        "Stationsname": "Rätselbox",
+        "Stationsbeschreibung": "Boxen",
+        "Stationslösung": "Wer ein guten Braten macht hat ein gutes Herz",
+        "Autor": "Lennart"
+    }
+]

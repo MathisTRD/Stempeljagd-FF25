@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferienfreizeit Game Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Ferienfreizeit Game Tracker</h1>
+    <div id="groups-container">
+        <!-- Hier werden die Gruppen dynamisch hinzugefügt -->
+    </div>
+    <table id="stations-table">
+        <thead>
+            <tr>
+                <th onclick="setFilter('station')">Stationsnummer <span id="station-sort-indicator">▲</span></th>
+                <th onclick="setFilter('station')">Stationsname <span id="station-sort-indicator">▲</span></th>
+                <th onclick="setFilter('group')">Group <span id="group-sort-indicator">▲</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Hier werden die Stationen und Gruppen dynamisch hinzugefügt -->
+        </tbody>
+    </table>
+    <img src="./Stempeljagt/assets/Logo.jpg" alt="Messdiener Euren Zewen Logo" class="logo">
+    <footer>
+        <p>Developed and authored by Mathis</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
