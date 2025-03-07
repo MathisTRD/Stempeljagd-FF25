@@ -1,17 +1,17 @@
 // Definiere die Gruppen mit ihren aktuellen und nächsten Stationen sowie abgeschlossenen Stationen
 const groups = [
-    { name: 'Group 1', currentStation: null, nextStation: null, completedStations: [] },
-    { name: 'Group 2', currentStation: null, nextStation: null, completedStations: [] },
-    { name: 'Group 3', currentStation: null, nextStation: null, completedStations: [] },
-    { name: 'Group 4', currentStation: null, nextStation: null, completedStations: [] },
-    { name: 'Group 5', currentStation: null, nextStation: null, completedStations: [] },
-    { name: 'Group 6', currentStation: null, nextStation: null, completedStations: [] },
-    { name: 'Group 7', currentStation: null, nextStation: null, completedStations: [] },
-    { name: 'Group 8', currentStation: null, nextStation: null, completedStations: [] },
-    { name: 'Group 9', currentStation: null, nextStation: null, completedStations: [] },
-    { name: 'Group 10', currentStation: null, nextStation: null, completedStations: [] },
-    { name: 'Group 11', currentStation: null, nextStation: null, completedStations: [] },
-    { name: 'Group 12', currentStation: null, nextStation: null, completedStations: [] },
+    { name: 'Gruppe 1', currentStation: null, nextStation: null, completedStations: [] },
+    { name: 'Gruppe 2', currentStation: null, nextStation: null, completedStations: [] },
+    { name: 'Gruppe 3', currentStation: null, nextStation: null, completedStations: [] },
+    { name: 'Gruppe 4', currentStation: null, nextStation: null, completedStations: [] },
+    { name: 'Gruppe 5', currentStation: null, nextStation: null, completedStations: [] },
+    { name: 'Gruppe 6', currentStation: null, nextStation: null, completedStations: [] },
+    { name: 'Gruppe 7', currentStation: null, nextStation: null, completedStations: [] },
+    { name: 'Gruppe 8', currentStation: null, nextStation: null, completedStations: [] },
+    { name: 'Gruppe 9', currentStation: null, nextStation: null, completedStations: [] },
+    { name: 'Gruppe 10', currentStation: null, nextStation: null, completedStations: [] },
+    { name: 'Gruppe 11', currentStation: null, nextStation: null, completedStations: [] },
+    { name: 'Gruppe 12', currentStation: null, nextStation: null, completedStations: [] },
 ];
 
 // Definiere die Stationen
@@ -66,8 +66,9 @@ function updateGroups() {
             <h2>${group.name}</h2>
             <p>Current Station: ${group.currentStation}</p>
             <p>Next Station: ${group.nextStation}</p>
-            <button onclick="finishStation(groups[${groups.indexOf(group)}])">Finish Station</button>
-            <button onclick="skipStation(groups[${groups.indexOf(group)}])">Skip Station</button>
+            <button class="btn-erfolgreich" onclick="finishStation(groups[${groups.indexOf(group)}])">Erfolgreich</button>
+            <button class="btn-durchgefallen" onclick="skipStation(groups[${groups.indexOf(group)}])">Durchgefallen</button>
+            <button onclick="skipStation(groups[${groups.indexOf(group)}])">Skip</button>
         `;
         container.appendChild(groupDiv);
     });
@@ -97,7 +98,8 @@ function updateStationsTable() {
         row.innerHTML = `
             <td>${station.Stationsnummer}</td>
             <td>${station.Stationsname}</td>
-            <td>${groupAtStation ? groupAtStation.name : 'None'}</td>
+            <td>${station.Stationsstandort}</td>
+            <td>${groupAtStation ? groupAtStation.name : '/'}</td>
         `;
         tableBody.appendChild(row);
     });
