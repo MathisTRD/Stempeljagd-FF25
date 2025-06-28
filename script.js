@@ -1,4 +1,4 @@
-// Definiere die Gruppen mit ihren aktuellen und nächsten Stationen sowie abgeschlossenen Stationen
+// Gruppen
 const groups = [
     { name: 'Gruppe 1', currentStation: null, nextStation: null, completedStations: [], skippedStations: [], failedStations: [] },
     { name: 'Gruppe 2', currentStation: null, nextStation: null, completedStations: [], skippedStations: [], failedStations: [] },
@@ -16,10 +16,10 @@ const groups = [
 
 // Definiere die Stationen
 let stations = [];
-let sortDirection = 'asc'; // Sortierrichtung: 'asc' für aufsteigend, 'desc' für absteigend
-let currentFilter = 'station'; // Standardfilter
-let statisticsSortDirection = 'desc'; // Sortierrichtung für Statistiktabelle
-let currentStatisticsFilter = 'completed'; // Standardfilter für Statistiktabelle
+let sortDirection = 'asc'; 
+let currentFilter = 'station'; 
+let statisticsSortDirection = 'desc'; 
+let currentStatisticsFilter = 'completed';
 
 // Lade die Stationen aus der JSON-Datei
 fetch('StempeljagdAufgabensammlung.json')
@@ -29,7 +29,7 @@ fetch('StempeljagdAufgabensammlung.json')
         updateGroups();
     });
 
-// Funktion, um die nächste Station für eine Gruppe zu finden
+// nächste Station finden
 function getNextStation(group) {
     const allCompletedStations = [...group.completedStations, ...group.skippedStations, ...group.failedStations];
     const availableStations = stations.filter(station => 
@@ -39,7 +39,7 @@ function getNextStation(group) {
     return availableStations.length > 0 ? availableStations[Math.floor(Math.random() * availableStations.length)].Stationsname : null;
 }
 
-// Funktion, um eine Station als abgeschlossen zu markieren
+// station erfolgreich
 function finishStation(group) {
     group.completedStations.push(group.currentStation);
     group.currentStation = group.nextStation;
@@ -47,7 +47,7 @@ function finishStation(group) {
     updateGroups();
 }
 
-// Funktion, um eine Station zu überspringen
+// station skippen
 function skipStation(group) {
     group.skippedStations.push(group.currentStation);
     group.currentStation = group.nextStation;
@@ -55,7 +55,7 @@ function skipStation(group) {
     updateGroups();
 }
 
-// Funktion, um eine Station als durchgefallen zu markieren
+// station durchgefallen
 function failStation(group) {
     group.failedStations.push(group.currentStation);
     group.currentStation = group.nextStation;
@@ -63,7 +63,7 @@ function failStation(group) {
     updateGroups();
 }
 
-// Funktion, um die Gruppen und ihre Stationen zu aktualisieren
+// gruppen updaten
 function updateGroups() {
     const container = document.getElementById('groups-container');
     container.innerHTML = '';
@@ -88,7 +88,7 @@ function updateGroups() {
     updateStatisticsTable();
 }
 
-// Funktion, um die Tabelle der Stationen und Gruppen zu aktualisieren
+// tabelle updaten
 function updateStationsTable() {
     const tableBody = document.querySelector('#stations-table tbody');
     tableBody.innerHTML = '';
@@ -119,7 +119,7 @@ function updateStationsTable() {
     });
 }
 
-// Funktion, um den Filter zu setzen und die Tabelle zu aktualisieren
+// filter setzen
 function setFilter(filter) {
     if (currentFilter === filter) {
         sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
@@ -131,27 +131,27 @@ function setFilter(filter) {
     updateStationsTable();
 }
 
-// Funktion, um die Sortierindikatoren zu aktualisieren
+// pfeile updaten
 function updateSortIndicators() {
     const stationSortIndicator = document.getElementById('station-sort-indicator');
     const groupSortIndicator = document.getElementById('group-sort-indicator');
     if (currentFilter === 'station') {
         stationSortIndicator.textContent = sortDirection === 'asc' ? '▲' : '▼';
-        groupSortIndicator.textContent = '↕'; // Zeige immer einen Indikator für sortierbare Spalten
+        groupSortIndicator.textContent = '↕';
     } else {
-        stationSortIndicator.textContent = '↕'; // Zeige immer einen Indikator für sortierbare Spalten
+        stationSortIndicator.textContent = '↕';
         groupSortIndicator.textContent = sortDirection === 'asc' ? '▲' : '▼';
     }
 }
 
-// Funktion, um die Statistiktabelle zu aktualisieren
+// statistik tabelle
 function updateStatisticsTable() {
     const tableBody = document.querySelector('#statistics-table tbody');
-    if (!tableBody) return; // Falls die Tabelle noch nicht existiert
+    if (!tableBody) return;
     
     tableBody.innerHTML = '';
     
-    // Sortiere die Gruppen basierend auf dem aktuellen Filter
+    // sortieren
     let sortedGroups = groups.slice();
     switch (currentStatisticsFilter) {
         case 'completed':
@@ -196,19 +196,17 @@ function updateStatisticsTable() {
     });
 }
 
-// Funktion, um den Filter für die Statistiktabelle zu setzen
 function setStatisticsFilter(filter) {
     if (currentStatisticsFilter === filter) {
         statisticsSortDirection = statisticsSortDirection === 'asc' ? 'desc' : 'asc';
     } else {
-        statisticsSortDirection = 'desc'; // Standardmäßig absteigend für neue Filter
+        statisticsSortDirection = 'desc';
     }
     currentStatisticsFilter = filter;
     updateStatisticsSortIndicators();
     updateStatisticsTable();
 }
 
-// Funktion, um die Sortierindikatoren für die Statistiktabelle zu aktualisieren
 function updateStatisticsSortIndicators() {
     const indicators = ['name-sort-indicator', 'completed-sort-indicator', 'skipped-sort-indicator', 'failed-sort-indicator', 'total-sort-indicator'];
     
@@ -218,12 +216,12 @@ function updateStatisticsSortIndicators() {
             if (id === `${currentStatisticsFilter}-sort-indicator`) {
                 element.textContent = statisticsSortDirection === 'asc' ? '▲' : '▼';
             } else {
-                element.textContent = '↕'; // Zeige immer einen Indikator für sortierbare Spalten
+                element.textContent = '↕';
             }
         }
     });
 }
 
-// Initialisiere die Gruppen und aktualisiere sie alle 5 Sekunden
+// start
 updateGroups();
 setInterval(updateGroups, 5000);
