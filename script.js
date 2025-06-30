@@ -81,8 +81,29 @@ window.debugApp = {
             updateGroups();
             console.log('✅ Alle Gruppen zurückgesetzt');
         }
-    }
+    },
 };
+
+// Debug-Funktion
+function debugGroupStatus() {
+    console.log('=== DEBUG: Gruppen Status ===');
+    groups.forEach((group, index) => {
+        const visited = getVisitedStations(group);
+        const isFinished = isGroupFinished(group);
+        console.log(`${group.name}:`, {
+            isFinished,
+            visitedCount: visited.length,
+            totalStations: stations.length,
+            currentStation: group.currentStation,
+            nextStation: group.nextStation,
+            completed: group.completedStations.length,
+            skipped: group.skippedStations.length,
+            failed: group.failedStations.length
+        });
+    });
+    console.log('Occupied stations:', Array.from(getOccupiedStations()));
+    console.log('================================');
+}
 
 // Definiere die Stationen
 let stations = [];
@@ -101,7 +122,10 @@ const getVisitedStations = (group) => [
 const isGroupFinished = (group) => getVisitedStations(group).length >= stations.length;
 
 const getOccupiedStations = () => new Set(
-    groups.map(group => group.currentStation).filter(Boolean)
+    groups
+        .filter(group => !isGroupFinished(group)) // Nur nicht-fertige Gruppen berücksichtigen
+        .map(group => group.currentStation)
+        .filter(Boolean)
 );
 
 // Prüft ob Station bereits von anderer Gruppe belegt ist
@@ -132,11 +156,18 @@ function validateStationAssignments() {
 
 // nächste Station finden (optimiert)
 function getNextStation(group) {
+    // Prüfe zuerst ob Gruppe bereits fertig ist
     if (isGroupFinished(group)) {
         return null;
     }
     
     const visitedByGroup = new Set(getVisitedStations(group));
+    
+    // Wenn alle Stationen besucht wurden, ist die Gruppe fertig
+    if (visitedByGroup.size >= stations.length) {
+        return null;
+    }
+    
     const occupiedStations = getOccupiedStations();
     
     // Finde verfügbare Stationen
@@ -194,6 +225,9 @@ function processStation(group, actionType) {
         group.nextStation = null;
     }
     
+    // Debug nach Aktion (optional - kann entfernt werden)
+    // debugGroupStatus();
+    
     updateGroups();
     return true;
 }
@@ -228,17 +262,17 @@ function createFinishedGroupHTML(group) {
 function createActiveGroupHTML(group, groupIndex) {
     return `
         <h2>${group.name}</h2>
-        <p><strong>Aktuelle Station:</strong> ${group.currentStation || 'Keine verfügbar'}</p>
-        <p><strong>Nächste Station:</strong> ${group.nextStation || 'Keine verfügbar'}</p>
+        <p><strong>Aktuelle Station:</strong> ${group.currentStation || '-'}</p>
+        <p><strong>Nächste Station:</strong> ${group.nextStation || '-'}</p>
         <div class="action-buttons">
             <button class="btn-erfolgreich" data-group-index="${groupIndex}" data-action="finish" ${!group.currentStation ? 'disabled' : ''}>
-                ✅ Erfolgreich
+                 Erfolgreich
             </button>
             <button class="btn-durchgefallen" data-group-index="${groupIndex}" data-action="fail" ${!group.currentStation ? 'disabled' : ''}>
-                ❌ Durchgefallen
+                Durchgefallen
             </button>
             <button class="btn-skip" data-group-index="${groupIndex}" data-action="skip" ${!group.currentStation ? 'disabled' : ''}>
-                ⏭️ Skip
+                Skip
             </button>
         </div>
     `;
@@ -270,6 +304,10 @@ function handleGroupAction(event) {
 
 // gruppen updaten (optimiert)
 function updateGroups() {
+    // Debug-Logging entfernt für bessere Performance
+    // console.log('🔄 updateGroups() aufgerufen');
+    // debugGroupStatus();
+    
     const container = document.getElementById('groups-container');
     if (!container) {
         console.error('Groups container nicht gefunden');
@@ -282,21 +320,24 @@ function updateGroups() {
     groups.forEach((group, index) => {
         const isFinished = isGroupFinished(group);
         
-        // Weise neue Stationen zu, falls nötig
+        // Weise neue Stationen nur zu wenn Gruppe NICHT fertig ist
         if (!isFinished) {
             if (!group.currentStation) {
                 group.currentStation = getNextStation(group);
             }
-            if (!group.nextStation) {
+            if (!group.nextStation && group.currentStation) {
                 group.nextStation = getNextStation(group);
             }
             
-            // Löse Konflikte
+            // Löse Konflikte nur für nicht-fertige Gruppen
             if (group.currentStation && isStationOccupied(group.currentStation, group)) {
                 group.currentStation = getNextStation(group);
+                if (group.currentStation) {
+                    group.nextStation = getNextStation(group);
+                }
             }
         } else {
-            // Fertige Gruppen bereinigen
+            // Fertige Gruppen komplett bereinigen
             group.currentStation = null;
             group.nextStation = null;
         }
@@ -474,7 +515,7 @@ function updateStatisticsSortIndicators() {
 // Initialisierung mit Error Handling und Performance-Optimierung
 async function initializeApp() {
     try {
-        console.log('🚀 Lade Stationen aus Firebase...');
+        console.log('Lade Stationen aus Firebase...');
         const data = await loadStations();
         stations = data || [];
         
@@ -482,9 +523,9 @@ async function initializeApp() {
         createGroups(stations.length);
         updateGroups();
         
-        console.log('✅ App erfolgreich initialisiert');
+        console.log('App erfolgreich initialisiert');
     } catch (error) {
-        console.error('❌ Fehler beim Laden der Stationen aus Firebase:', error);
+        console.error('Fehler beim Laden der Stationen aus Firebase:', error);
         stations = [];
         createGroups(0);
         updateGroups();
