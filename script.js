@@ -223,7 +223,7 @@ function updateStationsTable() {
             <thead>
                 <tr>
                     <th onclick="setFilter('station')">
-                        Station ${currentFilter === 'station' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}
+                        Station ${currentFilter === 'station' ? (sortDirection === 'asc' ? '▲' : '▼') : '↕'}
                     </th>
                     <th>Status</th>
                     <th>Belegt von</th>
@@ -262,26 +262,60 @@ function updateStatisticsTable() {
     }
     
     const sortedGroups = [...groups].sort((a, b) => {
-        if (currentStatisticsFilter === 'completed') {
-            return statisticsSortDirection === 'desc' ? 
-                b.completedStations.length - a.completedStations.length :
-                a.completedStations.length - b.completedStations.length;
+        let comparison = 0;
+        
+        switch (currentStatisticsFilter) {
+            case 'gruppe':
+                comparison = a.name.localeCompare(b.name);
+                break;
+            case 'completed':
+                comparison = b.completedStations.length - a.completedStations.length;
+                break;
+            case 'skipped':
+                comparison = b.skippedStations.length - a.skippedStations.length;
+                break;
+            case 'failed':
+                comparison = b.failedStations.length - a.failedStations.length;
+                break;
+            case 'gesamt':
+                const aTotal = getVisitedStations(a).length;
+                const bTotal = getVisitedStations(b).length;
+                comparison = bTotal - aTotal;
+                break;
+            case 'status':
+                const aFinished = getVisitedStations(a).length >= stations.length;
+                const bFinished = getVisitedStations(b).length >= stations.length;
+                comparison = bFinished - aFinished;
+                break;
+            default:
+                comparison = 0;
         }
-        return 0;
+        
+        return statisticsSortDirection === 'desc' ? comparison : -comparison;
     });
     
     const tableHTML = `
         <table>
             <thead>
                 <tr>
-                    <th>Gruppe</th>
-                    <th onclick="setStatisticsFilter('completed')">
-                        Erfolgreich ${currentStatisticsFilter === 'completed' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : ''}
+                    <th onclick="setStatisticsFilter('gruppe')">
+                        Gruppe ${currentStatisticsFilter === 'gruppe' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : '▲'}
                     </th>
-                    <th>Geskippt</th>
-                    <th>Durchgefallen</th>
-                    <th>Gesamt</th>
-                    <th>Status</th>
+                    <th onclick="setStatisticsFilter('completed')">
+                        Erfolgreich ${currentStatisticsFilter === 'completed' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : '▲'}
+                    </th>
+                    <th onclick="setStatisticsFilter('skipped')">
+                        Geskippt ${currentStatisticsFilter === 'skipped' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : '▲'}
+                    </th>
+                    <th onclick="setStatisticsFilter('failed')">
+                        Durchgefallen ${currentStatisticsFilter === 'failed' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : '▲'}
+                    </th>
+                    <th onclick="setStatisticsFilter('gesamt')">
+                        Gesamt ${currentStatisticsFilter === 'gesamt' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : '▲'}
+                    </th>
+                    <th onclick="setStatisticsFilter('status')">
+                        Status ${currentStatisticsFilter === 'status' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : '▲'}
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -435,6 +469,8 @@ document.addEventListener('DOMContentLoaded', initializeApp);
 
 window.createGroups = createGroups;
 window.adjustGroupCount = adjustGroupCount;
+window.setFilter = setFilter;
+window.setStatisticsFilter = setStatisticsFilter;
 window.groups = groups;
 window.stations = stations;
 window.debugGroups = () => {
