@@ -222,9 +222,7 @@ function updateStationsTable() {
         <table>
             <thead>
                 <tr>
-                    <th onclick="setFilter('station')">
-                        Station ${currentFilter === 'station' ? (sortDirection === 'asc' ? '▲' : '▼') : '↕'}
-                    </th>
+                    <th>Station</th>
                     <th>Status</th>
                     <th>Belegt von</th>
                 </tr>
@@ -298,24 +296,12 @@ function updateStatisticsTable() {
         <table>
             <thead>
                 <tr>
-                    <th onclick="setStatisticsFilter('gruppe')">
-                        Gruppe ${currentStatisticsFilter === 'gruppe' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : '▲'}
-                    </th>
-                    <th onclick="setStatisticsFilter('completed')">
-                        Erfolgreich ${currentStatisticsFilter === 'completed' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : '▲'}
-                    </th>
-                    <th onclick="setStatisticsFilter('skipped')">
-                        Geskippt ${currentStatisticsFilter === 'skipped' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : '▲'}
-                    </th>
-                    <th onclick="setStatisticsFilter('failed')">
-                        Durchgefallen ${currentStatisticsFilter === 'failed' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : '▲'}
-                    </th>
-                    <th onclick="setStatisticsFilter('gesamt')">
-                        Gesamt ${currentStatisticsFilter === 'gesamt' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : '▲'}
-                    </th>
-                    <th onclick="setStatisticsFilter('status')">
-                        Status ${currentStatisticsFilter === 'status' ? (statisticsSortDirection === 'desc' ? '▼' : '▲') : '▲'}
-                    </th>
+                    <th>Gruppe</th>
+                    <th onclick="setStatisticsFilter('completed')" style="cursor: pointer;">Erfolgreich</th>
+                    <th onclick="setStatisticsFilter('skipped')" style="cursor: pointer;">Geskippt</th>
+                    <th onclick="setStatisticsFilter('failed')" style="cursor: pointer;">Durchgefallen</th>
+                    <th onclick="setStatisticsFilter('gesamt')" style="cursor: pointer;">Gesamt</th>
+                    <th onclick="setStatisticsFilter('status')" style="cursor: pointer;">Status</th>
                 </tr>
             </thead>
             <tbody>

@@ -10,28 +10,30 @@
     <h1>Stempeljagd - Gruppen- und Stationsübersicht</h1>
     <div id="groups-container">
     </div>
+    <br><br>
+    <h2 style="text-align: center;">Stationen</h2>
     <table id="stations-table">
         <thead>
             <tr>
-                <th onclick="setFilter('station')">Stationsnummer <span id="station-sort-indicator">▲</span></th>
-                <th>Stationsname </th>
-                <th> Standort</th>
-                <th onclick="setFilter('group')">Gruppe <span id="group-sort-indicator">↕</span></th>
+                <th onclick="setFilter('station')">Stationsnummer</th>
+                <th>Stationsname</th>
+                <th>Standort</th>
+                <th onclick="setFilter('group')">Gruppe</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table> 
-    
-    <h2>Statistiken</h2>
+    <br><br>
+    <h2 style="text-align: center;">Statistiken</h2>
     <table id="statistics-table">
         <thead>
             <tr>
-                <th onclick="setStatisticsFilter('name')">Gruppe <span id="name-sort-indicator">↕</span></th>
-                <th onclick="setStatisticsFilter('completed')">Erfolgreich <span id="completed-sort-indicator">▼</span></th>
-                <th onclick="setStatisticsFilter('skipped')">Geskippt <span id="skipped-sort-indicator">↕</span></th>
-                <th onclick="setStatisticsFilter('failed')">Durchgefallen <span id="failed-sort-indicator">↕</span></th>
-                <th onclick="setStatisticsFilter('total')">Gesamt <span id="total-sort-indicator">↕</span></th>
+                <th onclick="setStatisticsFilter('name')">Gruppe</th>
+                <th onclick="setStatisticsFilter('completed')">Erfolgreich</th>
+                <th onclick="setStatisticsFilter('skipped')">Geskippt</th>
+                <th onclick="setStatisticsFilter('failed')">Durchgefallen</th>
+                <th onclick="setStatisticsFilter('total')">Gesamt</th>
             </tr>
         </thead>
         <tbody>
