@@ -211,11 +211,11 @@ function processStation(group, actionType) {
 }
 
 function updateStationsTable() {
-    const container = document.getElementById('stations-table');
-    if (!container) return;
+    const tbody = document.querySelector('#stations-table tbody');
+    if (!tbody) return;
     
     if (stations.length === 0) {
-        container.innerHTML = '<div class="no-stations-message">THERE ARE NO MORE STATIONS AVAILABLE</div>';
+        tbody.innerHTML = '<tr><td colspan="4" class="no-stations-message">THERE ARE NO MORE STATIONS AVAILABLE</td></tr>';
         return;
     }
     
@@ -230,39 +230,26 @@ function updateStationsTable() {
         return 0;
     });
     
-    const tableHTML = `
-        <table>
-            <thead>
-                <tr>
-                    <th>Station</th>
-                    <th>Status</th>
-                    <th>Belegt von</th>
+    const rowsHTML = sortedStations.length > 0 ? 
+        sortedStations.map(station => {
+            const isOccupied = occupiedStations.has(station.Stationsname);
+            const occupyingGroup = groups.find(g => 
+                g.currentStation === station.Stationsname || 
+                g.nextStation === station.Stationsname
+            );
+            
+            return `
+                <tr class="${isOccupied ? 'occupied' : 'free'}">
+                    <td>${station.Stationsnummer}</td>
+                    <td>${station.Stationsname}</td>
+                    <td>${station.Standort}</td>
+                    <td>${occupyingGroup ? occupyingGroup.name : '-'}</td>
                 </tr>
-            </thead>
-            <tbody>
-                ${sortedStations.length > 0 ? 
-                    sortedStations.map(station => {
-                        const isOccupied = occupiedStations.has(station.Stationsname);
-                        const occupyingGroup = groups.find(g => 
-                            g.currentStation === station.Stationsname || 
-                            g.nextStation === station.Stationsname
-                        );
-                        
-                        return `
-                            <tr class="${isOccupied ? 'occupied' : 'free'}">
-                                <td>${station.Stationsname}</td>
-                                <td>${isOccupied ? 'Belegt' : 'Frei'}</td>
-                                <td>${occupyingGroup ? occupyingGroup.name : '-'}</td>
-                            </tr>
-                        `;
-                    }).join('') : 
-                    '<tr><td colspan="3" class="no-stations-message">THERE ARE NO MORE STATIONS AVAILABLE</td></tr>'
-                }
-            </tbody>
-        </table>
-    `;
+            `;
+        }).join('') : 
+        '<tr><td colspan="4" class="no-stations-message">THERE ARE NO MORE STATIONS AVAILABLE</td></tr>';
     
-    container.innerHTML = tableHTML;
+    tbody.innerHTML = rowsHTML;
 }
 
 function updateStatisticsTable() {
@@ -457,12 +444,20 @@ const failStation = (group) => processStation(group, 'failed');
 
 async function initializeApp() {
     try {
+        console.log('Loading stations from Firebase...');
         stations = await loadStations();
+        console.log('Loaded stations:', stations);
+        console.log('Number of stations:', stations.length);
+        
         createGroups(stations.length);
         assignStationsToGroups();
         updateGroups();
+        updateStationsTable();
     } catch (error) {
-        
+        console.error('Error initializing app:', error);
+        // Fallback to empty state
+        stations = [];
+        updateStationsTable();
     }
 }
 

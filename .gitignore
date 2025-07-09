@@ -1,6 +1,33 @@
+# Deployment
 .vercel
-.firebase-config.json
-firebase-config.js
+
+# Environment files
 .env
+.env.local
+.env.production
+
+# Firebase config backup
+.firebase-config.json
+firebase-config-backup.js
+
+# Dependencies
 node_modules/
+
+# OS generated files
 .DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Build outputs
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.temp
