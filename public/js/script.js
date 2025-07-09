@@ -211,11 +211,11 @@ function processStation(group, actionType) {
 }
 
 function updateStationsTable() {
-    const tbody = document.querySelector('#stations-table tbody');
-    if (!tbody) return;
+    const container = document.getElementById('stations-table');
+    if (!container) return;
     
     if (stations.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" class="no-stations-message">THERE ARE NO MORE STATIONS AVAILABLE</td></tr>';
+        container.innerHTML = '<div class="no-stations-message">No stations available</div>';
         return;
     }
     
@@ -230,26 +230,41 @@ function updateStationsTable() {
         return 0;
     });
     
-    const rowsHTML = sortedStations.length > 0 ? 
-        sortedStations.map(station => {
-            const isOccupied = occupiedStations.has(station.Stationsname);
-            const occupyingGroup = groups.find(g => 
-                g.currentStation === station.Stationsname || 
-                g.nextStation === station.Stationsname
-            );
-            
-            return `
-                <tr class="${isOccupied ? 'occupied' : 'free'}">
-                    <td>${station.Stationsnummer}</td>
-                    <td>${station.Stationsname}</td>
-                    <td>${station.Standort}</td>
-                    <td>${occupyingGroup ? occupyingGroup.name : '-'}</td>
+    const tableHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th onclick="setFilter('station')" style="cursor: pointer;" title="Nach Station sortieren">Stationsname</th>
+                    <th>Standort</th>
+                    <th>Status</th>
+                    <th>Belegt von</th>
                 </tr>
-            `;
-        }).join('') : 
-        '<tr><td colspan="4" class="no-stations-message">THERE ARE NO MORE STATIONS AVAILABLE</td></tr>';
+            </thead>
+            <tbody>
+                ${sortedStations.length > 0 ? 
+                    sortedStations.map(station => {
+                        const isOccupied = occupiedStations.has(station.Stationsname);
+                        const occupyingGroup = groups.find(g => 
+                            g.currentStation === station.Stationsname || 
+                            g.nextStation === station.Stationsname
+                        );
+                        
+                        return `
+                            <tr class="${isOccupied ? 'occupied' : 'free'}">
+                                <td>${station.Stationsname}</td>
+                                <td>${station.Standort || '-'}</td>
+                                <td class="${isOccupied ? 'status-occupied' : 'status-free'}">${isOccupied ? 'Belegt' : 'Frei'}</td>
+                                <td>${occupyingGroup ? occupyingGroup.name : '-'}</td>
+                            </tr>
+                        `;
+                    }).join('') : 
+                    '<tr><td colspan="4" class="no-stations-message">Keine Stationen verfügbar</td></tr>'
+                }
+            </tbody>
+        </table>
+    `;
     
-    tbody.innerHTML = rowsHTML;
+    container.innerHTML = tableHTML;
 }
 
 function updateStatisticsTable() {
@@ -373,31 +388,53 @@ function handleGroupAction(event) {
 }
 
 function createFinishedGroupHTML(group) {
+    const total = group.completedStations.length + group.skippedStations.length + group.failedStations.length;
     return `
-        <h2>${group.name} </h2>
-        <p><strong>ALLE STATIONEN ABGESCHLOSSEN!</strong></p>
-        <div class="stats">
-            <span class="stat-success">Erfolgreich: ${group.completedStations.length}</span>
-            <span class="stat-skip">Geskippt: ${group.skippedStations.length}</span>
-            <span class="stat-fail">Durchgefallen: ${group.failedStations.length}</span>
+        <h2>${group.name}</h2>
+        <p><strong>🎉 ALLE STATIONEN ABGESCHLOSSEN!</strong></p>
+        <div class="finished-stats">
+            <div class="stat-row">
+                <span class="status-free">✓ Erfolgreich: ${group.completedStations.length}</span>
+            </div>
+            <div class="stat-row">
+                <span class="status-next">⏭ Geskippt: ${group.skippedStations.length}</span>
+            </div>
+            <div class="stat-row">
+                <span class="status-occupied">✗ Durchgefallen: ${group.failedStations.length}</span>
+            </div>
+            <div class="stat-row total">
+                <strong>Gesamt: ${total} Stationen</strong>
+            </div>
         </div>
     `;
 }
 
 function createActiveGroupHTML(group, groupIndex) {
+    const currentStation = group.currentStation;
+    const nextStation = group.nextStation;
+    
     return `
         <h2>${group.name}</h2>
-        <p><strong>Aktuelle Station:</strong> ${group.currentStation || '-'}</p>
-        <p><strong>Nächste Station:</strong> ${group.nextStation || '-'}</p>
+        <div class="station-info">
+            <p><strong>Aktuelle Station:</strong><br>
+               ${currentStation || '-'}</p>
+            <p><strong>Nächste Station:</strong><br>
+               ${nextStation || '-'}</p>
+        </div>
+        <div class="group-stats">
+            <p><span class="status-free">✓ ${group.completedStations.length}</span> | 
+               <span class="status-next">⏭ ${group.skippedStations.length}</span> | 
+               <span class="status-occupied">✗ ${group.failedStations.length}</span></p>
+        </div>
         <div class="action-buttons">
-            <button class="btn-erfolgreich" data-group-index="${groupIndex}" data-action="finish" ${!group.currentStation ? 'disabled' : ''}>
-                 Erfolgreich
+            <button class="btn-erfolgreich" data-group-index="${groupIndex}" data-action="finish" ${!group.currentStation ? 'disabled' : ''} title="${currentStation || 'Keine Station'} erfolgreich abschließen">
+                ✓ Erfolgreich
             </button>
-            <button class="btn-durchgefallen" data-group-index="${groupIndex}" data-action="fail" ${!group.currentStation ? 'disabled' : ''}>
-                Durchgefallen
+            <button class="btn-durchgefallen" data-group-index="${groupIndex}" data-action="fail" ${!group.currentStation ? 'disabled' : ''} title="${currentStation || 'Keine Station'} als durchgefallen markieren">
+                ✗ Durchgefallen
             </button>
-            <button class="btn-skip" data-group-index="${groupIndex}" data-action="skip" ${!group.currentStation ? 'disabled' : ''}>
-                Skip
+            <button class="btn-skip" data-group-index="${groupIndex}" data-action="skip" ${!group.currentStation ? 'disabled' : ''} title="${currentStation || 'Keine Station'} überspringen">
+                ⏭ Skip
             </button>
         </div>
     `;
@@ -444,20 +481,12 @@ const failStation = (group) => processStation(group, 'failed');
 
 async function initializeApp() {
     try {
-        console.log('Loading stations from Firebase...');
         stations = await loadStations();
-        console.log('Loaded stations:', stations);
-        console.log('Number of stations:', stations.length);
-        
         createGroups(stations.length);
         assignStationsToGroups();
         updateGroups();
-        updateStationsTable();
     } catch (error) {
-        console.error('Error initializing app:', error);
-        // Fallback to empty state
-        stations = [];
-        updateStationsTable();
+        
     }
 }
 
@@ -476,3 +505,100 @@ window.debugGroups = () => {
         
     });
 };
+
+// Dark Mode Toggle Functionality - Global functions
+window.toggleTheme = function() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    // Update theme icon
+    const themeIcon = document.getElementById('theme-icon');
+    if (themeIcon) {
+        themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+    }
+}
+
+window.initializeTheme = function() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const defaultTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    
+    document.documentElement.setAttribute('data-theme', defaultTheme);
+    
+    const themeIcon = document.getElementById('theme-icon');
+    if (themeIcon) {
+        themeIcon.textContent = defaultTheme === 'dark' ? '🌙' : '☀️';
+    }
+}
+
+// Initialize theme when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeTheme();
+    initializeSectionVisibility();
+});
+
+// Listen for system theme changes
+if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            const themeIcon = document.getElementById('theme-icon');
+            if (themeIcon) {
+                themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            }
+        }
+    });
+}
+
+// Section Toggle Functionality
+window.toggleSection = function(sectionName) {
+    const content = document.getElementById(`${sectionName}-content`);
+    const toggle = document.getElementById(`${sectionName}-toggle`);
+    const toggleText = document.getElementById(`${sectionName}-toggle-text`);
+    
+    if (!content || !toggle || !toggleText) return;
+    
+    const isCollapsed = content.classList.contains('collapsed');
+    
+    if (isCollapsed) {
+        // Show section
+        content.classList.remove('collapsed');
+        toggle.classList.remove('collapsed');
+        toggleText.textContent = 'Ausblenden';
+        localStorage.setItem(`${sectionName}-visible`, 'true');
+    } else {
+        // Hide section
+        content.classList.add('collapsed');
+        toggle.classList.add('collapsed');
+        toggleText.textContent = 'Einblenden';
+        localStorage.setItem(`${sectionName}-visible`, 'false');
+    }
+}
+
+// Initialize section visibility from localStorage
+function initializeSectionVisibility() {
+    const sections = ['stations', 'statistics'];
+    
+    sections.forEach(sectionName => {
+        const isVisible = localStorage.getItem(`${sectionName}-visible`);
+        
+        // Default to visible if no preference is saved
+        if (isVisible === 'false') {
+            const content = document.getElementById(`${sectionName}-content`);
+            const toggle = document.getElementById(`${sectionName}-toggle`);
+            const toggleText = document.getElementById(`${sectionName}-toggle-text`);
+            
+            if (content && toggle && toggleText) {
+                content.classList.add('collapsed');
+                toggle.classList.add('collapsed');
+                toggleText.textContent = 'Einblenden';
+            }
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initializeSectionVisibility);

@@ -1,33 +1,25 @@
-# Deployment
-.vercel
-
-# Environment files
+# Sensitive environment variables
 .env
-.env.local
-.env.production
+.env.*
 
-# Firebase config backup
-.firebase-config.json
-firebase-config-backup.js
-
-# Dependencies
-node_modules/
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# IDE files
-.vscode/
-.idea/
-
-# Logs
-*.log
-
-# Build outputs
+# Build/deployment outputs
+.vercel/
 dist/
 build/
 
-# Temporary files
+# Local/IDE/OS files
+.vscode/
+.idea/
+.DS_Store
+*.log
 *.tmp
 *.temp
+*.swp
+*.swo
+*~
+
+# Firebase local emulation (if used)
+.firebase/
+
+# Optional: Remove this if you want to keep .vercel.json in git
+vercel.json
