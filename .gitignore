@@ -1,3 +1,6 @@
 .vercel
 .firebase-config.json
 firebase-config.js
+.env
+node_modules/
+.DS_Store

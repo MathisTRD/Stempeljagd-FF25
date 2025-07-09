@@ -116,6 +116,18 @@ function getNextStation(group) {
     );
     
     if (availableStations.length === 0) {
+        // Display message when no stations are available
+        const container = document.getElementById('stations-table');
+        if (container) {
+            const noStationsMsg = document.createElement('div');
+            noStationsMsg.className = 'no-stations-message';
+            noStationsMsg.textContent = 'THERE ARE NO MORE STATIONS AVAILABLE';
+            
+            // Only add if not already present
+            if (!container.querySelector('.no-stations-message')) {
+                container.prepend(noStationsMsg);
+            }
+        }
         return null;
     }
     
@@ -203,7 +215,7 @@ function updateStationsTable() {
     if (!container) return;
     
     if (stations.length === 0) {
-        container.innerHTML = '<p>Keine Stationen verfügbar</p>';
+        container.innerHTML = '<div class="no-stations-message">THERE ARE NO MORE STATIONS AVAILABLE</div>';
         return;
     }
     
@@ -228,21 +240,24 @@ function updateStationsTable() {
                 </tr>
             </thead>
             <tbody>
-                ${sortedStations.map(station => {
-                    const isOccupied = occupiedStations.has(station.Stationsname);
-                    const occupyingGroup = groups.find(g => 
-                        g.currentStation === station.Stationsname || 
-                        g.nextStation === station.Stationsname
-                    );
-                    
-                    return `
-                        <tr class="${isOccupied ? 'occupied' : 'free'}">
-                            <td>${station.Stationsname}</td>
-                            <td>${isOccupied ? 'Belegt' : 'Frei'}</td>
-                            <td>${occupyingGroup ? occupyingGroup.name : '-'}</td>
-                        </tr>
-                    `;
-                }).join('')}
+                ${sortedStations.length > 0 ? 
+                    sortedStations.map(station => {
+                        const isOccupied = occupiedStations.has(station.Stationsname);
+                        const occupyingGroup = groups.find(g => 
+                            g.currentStation === station.Stationsname || 
+                            g.nextStation === station.Stationsname
+                        );
+                        
+                        return `
+                            <tr class="${isOccupied ? 'occupied' : 'free'}">
+                                <td>${station.Stationsname}</td>
+                                <td>${isOccupied ? 'Belegt' : 'Frei'}</td>
+                                <td>${occupyingGroup ? occupyingGroup.name : '-'}</td>
+                            </tr>
+                        `;
+                    }).join('') : 
+                    '<tr><td colspan="3" class="no-stations-message">THERE ARE NO MORE STATIONS AVAILABLE</td></tr>'
+                }
             </tbody>
         </table>
     `;

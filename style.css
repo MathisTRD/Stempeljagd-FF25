@@ -92,6 +92,19 @@ h1 {
     text-overflow: ellipsis;
 }
 
+.no-stations-message {
+    text-align: center;
+    padding: 20px;
+    margin: 20px auto;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    color: #721c24;
+    max-width: 600px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 button {
     background-color: #007bff;
     border: none;
