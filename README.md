@@ -13,13 +13,13 @@ A station management system for group activities.
 1. Clone the repository
 2. Create a `.env` file with your Firebase configuration:
 ```env
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
+FIREBASE_API_KEY=your_api_key
+FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+FIREBASE_PROJECT_ID=your_project_id
+FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+FIREBASE_APP_ID=your_app_id
+FIREBASE_MEASUREMENT_ID=your_measurement_id
 ```
 
 3. Start the development server:
@@ -37,7 +37,14 @@ npm run dev
 2. Connect your repository to Vercel
 3. Add environment variables in Vercel dashboard:
    - Go to Project Settings → Environment Variables
-   - Add all the `VITE_FIREBASE_*` variables from your `.env` file
+   - Add all the `FIREBASE_*` variables from your `.env` file:
+     - `FIREBASE_API_KEY`
+     - `FIREBASE_AUTH_DOMAIN`
+     - `FIREBASE_PROJECT_ID`
+     - `FIREBASE_STORAGE_BUCKET`
+     - `FIREBASE_MESSAGING_SENDER_ID`
+     - `FIREBASE_APP_ID`
+     - `FIREBASE_MEASUREMENT_ID`
 
 ### Manual Static Hosting
 

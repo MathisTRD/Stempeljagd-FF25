@@ -3,33 +3,21 @@
 
 let firebaseConfig;
 
-// Check if we're in a Vite environment (for development/build)
-if (typeof import.meta !== 'undefined' && import.meta.env) {
+// Check if we're in Vercel environment (server-side environment variables)
+if (typeof process !== 'undefined' && process.env) {
     firebaseConfig = {
-        apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-        authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-        projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-        storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-        messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-        appId: import.meta.env.VITE_FIREBASE_APP_ID,
-        measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+        apiKey: process.env.FIREBASE_API_KEY,
+        authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+        appId: process.env.FIREBASE_APP_ID,
+        measurementId: process.env.FIREBASE_MEASUREMENT_ID
     };
 }
-// Check if we're in Vercel environment
-else if (typeof process !== 'undefined' && process.env) {
-    firebaseConfig = {
-        apiKey: process.env.VITE_FIREBASE_API_KEY,
-        authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
-        projectId: process.env.VITE_FIREBASE_PROJECT_ID,
-        storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
-        messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-        appId: process.env.VITE_FIREBASE_APP_ID,
-        measurementId: process.env.VITE_FIREBASE_MEASUREMENT_ID
-    };
-}
-// Fallback for direct file serving (like python -m http.server)
+// Fallback for static hosting (like python -m http.server or direct file serving)
 else {
-    // For static hosting, we'll inject the config at build time
+    // For static hosting, we'll use the hardcoded config as fallback
     firebaseConfig = window.FIREBASE_CONFIG || {
         apiKey: "AIzaSyB8oHENYa0PRroiZFRQEFw0XiZELSgtA8o",
         authDomain: "stempeljagt-stationen.firebaseapp.com",
