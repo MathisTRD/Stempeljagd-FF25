@@ -18,9 +18,7 @@
     --warning-color: #ffc107;
     --primary-color: #007bff;
 }
-
 [data-theme="dark"] {
-    /* Dark mode colors */
     --bg-color: #1a1a1a;
     --card-bg: #2d2d2d;
     --text-color: #e0e0e0;
@@ -142,62 +140,76 @@ main {
 }
 
 /* Dark Mode Toggle */
+
 .theme-toggle {
-    background: var(--card-bg);
+    background: none;
     border: 2px solid var(--border-color);
-    border-radius: 25px;
-    width: 50px;
-    height: 26px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
     position: relative;
     cursor: pointer;
-    transition: all 0.3s ease;
-    outline: none;
-}
-
-.theme-toggle:hover {
-    border-color: var(--primary-color);
-}
-
-.theme-toggle-slider {
-    width: 18px;
-    height: 18px;
-    background: var(--primary-color);
-    border-radius: 50%;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    transition: transform 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+}
+
+
+.theme-toggle:hover {
+    border-color: var(--primary-color);
+    background: color-mix(in srgb, var(--primary-color) 8%, transparent);
+}
+
+
+
+.theme-toggle-slider {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 2px var(--border-color);
+    transition: background 0.3s, box-shadow 0.3s;
 }
 
 [data-theme="dark"] .theme-toggle-slider {
-    transform: translateX(24px);
+    background: #111;
+    box-shadow: 0 0 0 2px #444;
 }
 
-.theme-label {
-    font-size: 0.9em;
-    color: var(--text-secondary);
-    margin-left: 8px;
-    user-select: none;
-    transition: color 0.3s ease;
-}
 
-/* Group Cards */
+/* Remove .theme-label for minimalism */
+
+    /* Group Cards */
+
+/* Station name in group card */
+.group .station-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25em;
+    font-weight: 500;
+    color: var(--text-color);
+    background: none;
+    border-radius: 8px;
+    margin: 0 auto 12px auto;
+    padding: 8px 0 4px 0;
+    text-align: center;
+    box-shadow: none;
+}
 .group {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    box-shadow: 0 4px 8px var(--shadow);
-    padding: 20px;
+    box-shadow: 0 2px 8px var(--shadow);
+    padding: 16px 14px;
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
     height: auto;
-    min-height: 220px;
+    min-height: 180px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: box-shadow 0.3s, border-color 0.3s;
     overflow: hidden;
     position: relative;
     justify-self: center;

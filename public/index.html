@@ -2,9 +2,8 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="description" content="Stempeljagd - Gruppen- und Stationsübersicht für Jugendarbeit">
-    <meta name="author" content="Mathis">
     <title>Stempeljagd - Stationsübersicht</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/jpeg" href="../assets/Logo.jpg">
@@ -12,28 +11,24 @@
 <body>
     <header>
         <div class="header-content">
+            <div class="group-count-center">
+                <label for="group-count-input" class="group-count-label">Anzahl Gruppen:</label>
+                <input id="group-count-input" class="group-count-input" type="number" min="1" max="99" value="4" onchange="onGroupCountChange(this.value)">
+            </div>
             <div class="logo-title-section">
-                <img src="../assets/Logo.jpg" alt="Stempeljagd Logo" class="logo">
-                <h1>Stempeljagd - Stationsübersicht</h1>
+                <h1 style="text-align:center; margin:0 auto;">Stempeljagd - Stationsübersicht</h1>
             </div>
             <div class="header-controls">
                 <div class="theme-toggle" onclick="toggleTheme()" title="Dark/Light Mode wechseln">
-                    <div class="theme-toggle-slider">
-                        <span id="theme-icon">☀️</span>
-                    </div>
+                    <div class="theme-toggle-slider"></div>
                 </div>
-                <span class="theme-label">Dark Mode</span>
             </div>
         </div>
     </header>
-    
     <main>
         <section id="groups-section">
-            <div id="groups-container">
-                <!-- Groups will be dynamically loaded here -->
-            </div>
+            <div id="groups-container"></div>
         </section>
-        
         <section id="stations-section">
             <div class="section-header">
                 <h2>Stationen</h2>
@@ -43,24 +38,19 @@
                 </button>
             </div>
             <div id="stations-content" class="collapsible-section">
-                <div id="filter-container">
-                    <!-- Filter controls can be added here -->
-                </div>            <table id="stations-table">
-                <thead>
-                    <tr>
-                        <th onclick="setFilter('station')" title="Nach Station sortieren">Stationsname</th>
-                        <th title="Standort der Station">Standort</th>
-                        <th title="Status der Station">Status</th>
-                        <th title="Welche Gruppe ist hier">Belegt von</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Stations will be dynamically loaded here -->
-                </tbody>
-            </table>
+                <table id="stations-table">
+                    <thead>
+                        <tr>
+                            <th onclick="setFilter('station')" title="Nach Station sortieren">Stationsname</th>
+                            <th title="Standort der Station">Standort</th>
+                            <th title="Status der Station">Status</th>
+                            <th title="Welche Gruppe ist hier">Belegt von</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </section>
-        
         <section id="statistics-section">
             <div class="section-header">
                 <h2>Statistiken</h2>
@@ -81,27 +71,20 @@
                             <th title="Aktueller Status der Gruppe">Status</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- Statistics will be dynamically loaded here -->
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </section>
     </main>
-    
     <footer>
         <p>&copy; 2025 Mathis - Stempeljagd Verwaltungssystem</p>
     </footer>
-    
-    <script type="module" src="js/script.js"></script>
+    <script type="module" src="js/script.js" defer></script>
     <script>
-        // Sofortige Theme-Initialisierung um Flicker zu vermeiden
-        (function() {
-            const savedTheme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const defaultTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-            document.documentElement.setAttribute('data-theme', defaultTheme);
-        })();
+        // Theme-Initialisierung ohne Flicker
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', savedTheme || (prefersDark ? 'dark' : 'light'));
     </script>
 </body>
 </html>

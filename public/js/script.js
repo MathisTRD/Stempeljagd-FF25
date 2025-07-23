@@ -1,4 +1,24 @@
-import { loadStations, addStation, updateStation, deleteStation } from './firebase-config.js';
+// Handler für Gruppenanzahl-Änderung im Input-Feld
+window.onGroupCountChange = function(value) {
+    const count = parseInt(value, 10);
+    if (!isNaN(count) && count > 0 && count <= 99) {
+        adjustGroupCount(count);
+        assignStationsToGroups();
+        updateGroups();
+    }
+}
+// Load stations from assets/stationen.json
+async function loadStations() {
+    try {
+        const response = await fetch('assets/stationen.json');
+        if (!response.ok) throw new Error('Fehler beim Laden der Stationen');
+        const data = await response.json();
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        console.error('Fehler beim Laden der Stationen:', error);
+        return [];
+    }
+}
 
 let groups = [];
 
@@ -7,14 +27,11 @@ function createGroups(stationCount) {
         groups = [];
         return;
     }
-    
-    const optimalGroupCount = Math.max(1, Math.ceil(stationCount * 0.8));
-    const groupCount = Math.min(optimalGroupCount, 12);
-    
+    const groupCount = Math.max(1, Math.ceil(stationCount * 0.8));
     groups = Array.from({ length: groupCount }, (_, i) => ({
         name: `Gruppe ${i + 1}`,
         currentStation: null,
-        nextStation: null,
+        blacklist: [], // alle besuchten Stationen
         completedStations: [],
         skippedStations: [],
         failedStations: []
@@ -25,28 +42,15 @@ function adjustGroupCount(newCount) {
     if (!Number.isInteger(newCount) || newCount < 1 || newCount > 20) {
         return false;
     }
-    
-    if (newCount < groups.length && groups.some(g => g.completedStations.length > 0)) {
-        
-    }
-    
     const oldGroups = [...groups];
     groups = Array.from({ length: newCount }, (_, i) => ({
         name: `Gruppe ${i + 1}`,
-        currentStation: null,
-        nextStation: null,
-        completedStations: [],
-        skippedStations: [],
-        failedStations: [],
-        ...(oldGroups[i] ? {
-            currentStation: oldGroups[i].currentStation,
-            nextStation: oldGroups[i].nextStation,
-            completedStations: [...oldGroups[i].completedStations],
-            skippedStations: [...oldGroups[i].skippedStations],
-            failedStations: [...oldGroups[i].failedStations]
-        } : {})
+        currentStation: oldGroups[i]?.currentStation || null,
+        blacklist: oldGroups[i]?.blacklist ? [...oldGroups[i].blacklist] : [],
+        completedStations: oldGroups[i]?.completedStations ? [...oldGroups[i].completedStations] : [],
+        skippedStations: oldGroups[i]?.skippedStations ? [...oldGroups[i].skippedStations] : [],
+        failedStations: oldGroups[i]?.failedStations ? [...oldGroups[i].failedStations] : []
     }));
-    
     updateGroups();
     return true;
 }
@@ -57,18 +61,14 @@ let currentFilter = 'station';
 let statisticsSortDirection = 'desc'; 
 let currentStatisticsFilter = 'completed';
 
-const getVisitedStations = (group) => [
-    ...group.completedStations,
-    ...group.skippedStations,
-    ...group.failedStations
-];
+const getVisitedStations = (group) => group.blacklist;
 
 const isGroupFinished = (group) => getVisitedStations(group).length >= stations.length;
 
 const getOccupiedStations = () => new Set(
     groups
         .filter(group => !isGroupFinished(group))
-        .flatMap(group => [group.currentStation, group.nextStation])
+        .map(group => group.currentStation)
         .filter(Boolean)
 );
 
@@ -97,91 +97,46 @@ function validateStationAssignments() {
     return conflicts;
 }
 
+
 function getNextStation(group) {
-    if (isGroupFinished(group)) {
-        return null;
-    }
-    
-    const visitedByGroup = new Set(getVisitedStations(group));
-    
-    if (visitedByGroup.size >= stations.length) {
-        return null;
-    }
-    
-    const occupiedStations = getOccupiedStations();
-    
-    const availableStations = stations.filter(station => 
-        !visitedByGroup.has(station.Stationsname) && 
-        !occupiedStations.has(station.Stationsname)
+    if (isGroupFinished(group)) return null;
+    const visited = new Set(group.blacklist);
+    // 1. Versuche eine freie, noch nicht besuchte Station zu finden
+    const occupied = getOccupiedStations();
+    const freeStations = stations.filter(station =>
+        !visited.has(station.Stationsname) && !occupied.has(station.Stationsname)
     );
-    
-    if (availableStations.length === 0) {
-        // Display message when no stations are available
-        const container = document.getElementById('stations-table');
-        if (container) {
-            const noStationsMsg = document.createElement('div');
-            noStationsMsg.className = 'no-stations-message';
-            noStationsMsg.textContent = 'THERE ARE NO MORE STATIONS AVAILABLE';
-            
-            // Only add if not already present
-            if (!container.querySelector('.no-stations-message')) {
-                container.prepend(noStationsMsg);
-            }
-        }
-        return null;
+    if (freeStations.length > 0) {
+        const idx = Math.floor(Math.random() * freeStations.length);
+        return freeStations[idx].Stationsname;
     }
-    
-    if (isGroupFinished(group)) {
-        return null;
+    // 2. Wenn keine freie Station, dann eine noch nicht besuchte, auch wenn belegt
+    const notYetVisited = stations.filter(station => !visited.has(station.Stationsname));
+    if (notYetVisited.length > 0) {
+        const idx = Math.floor(Math.random() * notYetVisited.length);
+        return notYetVisited[idx].Stationsname;
     }
-    
-    const randomIndex = Math.floor(Math.random() * availableStations.length);
-    const selectedStation = availableStations[randomIndex].Stationsname;
-    
-    return selectedStation;
+    // 3. Sonst fertig
+    return null;
 }
 
 function assignStationsToGroups() {
     groups.forEach(group => {
         if (isGroupFinished(group)) {
             group.currentStation = null;
-            group.nextStation = null;
             return;
         }
-        
         if (!group.currentStation) {
             group.currentStation = getNextStation(group);
-        }
-        
-        if (!group.nextStation && group.currentStation && !isGroupFinished(group)) {
-            group.nextStation = getNextStation(group);
-        }
-        
-        if (group.currentStation && !isGroupFinished(group) && isStationOccupied(group.currentStation, group)) {
-            group.currentStation = getNextStation(group);
-            if (group.currentStation && !isGroupFinished(group)) {
-                group.nextStation = getNextStation(group);
-            }
         }
     });
 }
 
 function processStation(group, actionType) {
-    if (isGroupFinished(group)) {
-        return false;
-    }
-    
-    if (!group.currentStation) {
-        return false;
-    }
-    
-    const visitedStations = getVisitedStations(group);
-    if (visitedStations.includes(group.currentStation)) {
-        return false;
-    }
-    
+    if (isGroupFinished(group)) return false;
+    if (!group.currentStation) return false;
     const currentStationName = group.currentStation;
-    
+    if (group.blacklist.includes(currentStationName)) return false;
     switch (actionType) {
         case 'completed':
             group.completedStations.push(currentStationName);
@@ -195,17 +150,8 @@ function processStation(group, actionType) {
         default:
             return false;
     }
-    
-    if (isGroupFinished(group)) {
-        group.currentStation = null;
-        group.nextStation = null;
-        updateGroups();
-        return true;
-    }
-    
-    group.currentStation = group.nextStation;
-    group.nextStation = getNextStation(group);
-    
+    group.blacklist.push(currentStationName);
+    group.currentStation = getNextStation(group);
     updateGroups();
     return true;
 }
@@ -411,16 +357,9 @@ function createFinishedGroupHTML(group) {
 
 function createActiveGroupHTML(group, groupIndex) {
     const currentStation = group.currentStation;
-    const nextStation = group.nextStation;
-    
     return `
         <h2>${group.name}</h2>
-        <div class="station-info">
-            <p><strong>Aktuelle Station:</strong><br>
-               ${currentStation || '-'}</p>
-            <p><strong>Nächste Station:</strong><br>
-               ${nextStation || '-'}</p>
-        </div>
+        <div class="station-name">${currentStation || '-'}</div>
         <div class="group-stats">
             <p><span class="status-free">✓ ${group.completedStations.length}</span> | 
                <span class="status-next">⏭ ${group.skippedStations.length}</span> | 
@@ -502,7 +441,7 @@ window.debugGroups = () => {
     groups.forEach(group => {
         const visited = getVisitedStations(group).length;
         const isFinished = visited >= stations.length;
-        
+        // ...existing code...
     });
 };
 
