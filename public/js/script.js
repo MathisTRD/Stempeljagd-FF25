@@ -190,17 +190,15 @@ function updateStationsTable() {
                 ${sortedStations.length > 0 ? 
                     sortedStations.map(station => {
                         const isOccupied = occupiedStations.has(station.Stationsname);
-                        const occupyingGroup = groups.find(g => 
-                            g.currentStation === station.Stationsname || 
-                            g.nextStation === station.Stationsname
-                        );
-                        
+                        // Finde alle Gruppen, die aktuell auf dieser Station sind
+                        const occupyingGroups = groups.filter(g => g.currentStation === station.Stationsname);
+                        const occupyingNames = occupyingGroups.map(g => g.name).join(', ');
                         return `
                             <tr class="${isOccupied ? 'occupied' : 'free'}">
                                 <td>${station.Stationsname}</td>
                                 <td>${station.Standort || '-'}</td>
                                 <td class="${isOccupied ? 'status-occupied' : 'status-free'}">${isOccupied ? 'Belegt' : 'Frei'}</td>
-                                <td>${occupyingGroup ? occupyingGroup.name : '-'}</td>
+                                <td>${occupyingNames || '-'}</td>
                             </tr>
                         `;
                     }).join('') : 
@@ -337,16 +335,16 @@ function createFinishedGroupHTML(group) {
     const total = group.completedStations.length + group.skippedStations.length + group.failedStations.length;
     return `
         <h2>${group.name}</h2>
-        <p><strong>🎉 ALLE STATIONEN ABGESCHLOSSEN!</strong></p>
+        <p><strong>ALLE STATIONEN ABGESCHLOSSEN!</strong></p>
         <div class="finished-stats">
             <div class="stat-row">
-                <span class="status-free">✓ Erfolgreich: ${group.completedStations.length}</span>
+                <span class="status-free">Erfolgreich: ${group.completedStations.length}</span>
             </div>
             <div class="stat-row">
-                <span class="status-next">⏭ Geskippt: ${group.skippedStations.length}</span>
+                <span class="status-next">Geskippt: ${group.skippedStations.length}</span>
             </div>
             <div class="stat-row">
-                <span class="status-occupied">✗ Durchgefallen: ${group.failedStations.length}</span>
+                <span class="status-occupied">Durchgefallen: ${group.failedStations.length}</span>
             </div>
             <div class="stat-row total">
                 <strong>Gesamt: ${total} Stationen</strong>
@@ -361,19 +359,19 @@ function createActiveGroupHTML(group, groupIndex) {
         <h2>${group.name}</h2>
         <div class="station-name">${currentStation || '-'}</div>
         <div class="group-stats">
-            <p><span class="status-free">✓ ${group.completedStations.length}</span> | 
-               <span class="status-next">⏭ ${group.skippedStations.length}</span> | 
-               <span class="status-occupied">✗ ${group.failedStations.length}</span></p>
+            <p><span class="status-free">${group.completedStations.length}</span> | 
+               <span class="status-next">${group.skippedStations.length}</span> | 
+               <span class="status-occupied">${group.failedStations.length}</span></p>
         </div>
         <div class="action-buttons">
             <button class="btn-erfolgreich" data-group-index="${groupIndex}" data-action="finish" ${!group.currentStation ? 'disabled' : ''} title="${currentStation || 'Keine Station'} erfolgreich abschließen">
-                ✓ Erfolgreich
+                Erfolgreich
             </button>
             <button class="btn-durchgefallen" data-group-index="${groupIndex}" data-action="fail" ${!group.currentStation ? 'disabled' : ''} title="${currentStation || 'Keine Station'} als durchgefallen markieren">
-                ✗ Durchgefallen
+                Durchgefallen
             </button>
             <button class="btn-skip" data-group-index="${groupIndex}" data-action="skip" ${!group.currentStation ? 'disabled' : ''} title="${currentStation || 'Keine Station'} überspringen">
-                ⏭ Skip
+                Skip
             </button>
         </div>
     `;
@@ -421,7 +419,7 @@ const failStation = (group) => processStation(group, 'failed');
 async function initializeApp() {
     try {
         stations = await loadStations();
-        createGroups(stations.length);
+        createGroups(6);
         assignStationsToGroups();
         updateGroups();
     } catch (error) {
@@ -456,7 +454,7 @@ window.toggleTheme = function() {
     // Update theme icon
     const themeIcon = document.getElementById('theme-icon');
     if (themeIcon) {
-        themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+        themeIcon.textContent = '';
     }
 }
 
@@ -469,7 +467,7 @@ window.initializeTheme = function() {
     
     const themeIcon = document.getElementById('theme-icon');
     if (themeIcon) {
-        themeIcon.textContent = defaultTheme === 'dark' ? '🌙' : '☀️';
+        themeIcon.textContent = '';
     }
 }
 
@@ -487,7 +485,7 @@ if (window.matchMedia) {
             document.documentElement.setAttribute('data-theme', newTheme);
             const themeIcon = document.getElementById('theme-icon');
             if (themeIcon) {
-                themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+                themeIcon.textContent = '';
             }
         }
     });
