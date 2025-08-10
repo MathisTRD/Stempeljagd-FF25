@@ -1,0 +1,142 @@
+[
+  {
+    "ID": 1,
+    "Stationsname": "Sehenswürdigkeiten",
+    "Standort": "-"
+  },
+  {
+    "ID": 2,
+    "Stationsname": "Kreuzworträtsel",
+    "Standort": "-"
+  },
+  {
+    "ID": 3,
+    "Stationsname": "Coding Rätsel",
+    "Standort": "-"
+  },
+  {
+    "ID": 4,
+    "Stationsname": "Wörterrätsel",
+    "Standort": "-"
+  },
+  {
+    "ID": 5,
+    "Stationsname": "Bilderrätsel",
+    "Standort": "-"
+  },
+  {
+    "ID": 6,
+    "Stationsname": "Zewener Mundart",
+    "Standort": "-"
+  },
+  {
+    "ID": 7,
+    "Stationsname": "Schloss knacken",
+    "Standort": "-"
+  },
+  {
+    "ID": 9,
+    "Stationsname": "Origami falten",
+    "Standort": "-"
+  },
+  {
+    "ID": 10,
+    "Stationsname": "Irrgarten",
+    "Standort": "-"
+  },
+  {
+    "ID": 11,
+    "Stationsname": "Bierdeckel raten",
+    "Standort": "-"
+  },
+  {
+    "ID": 12,
+    "Stationsname": "Foto machen",
+    "Standort": "-"
+  },
+  {
+    "ID": 13,
+    "Stationsname": "Marken erraten",
+    "Standort": "-"
+  },
+  {
+    "ID": 14,
+    "Stationsname": "Buchstabenposition",
+    "Standort": "-"
+  },
+  {
+    "ID": 15,
+    "Stationsname": "Lückentext",
+    "Standort": "-"
+  },
+  {
+    "ID": 16,
+    "Stationsname": "Wer War es",
+    "Standort": "-"
+  },
+  {
+    "ID": 17,
+    "Stationsname": "Imposter Wort",
+    "Standort": "-"
+  },
+  {
+    "ID": 18,
+    "Stationsname": "Dartquiz",
+    "Standort": "-"
+  },
+  {
+    "ID": 19,
+    "Stationsname": "gemalte Sprichwörter",
+    "Standort": "-"
+  },
+  {
+    "ID": 20,
+    "Stationsname": "Gegenstand Rätsel",
+    "Standort": "-"
+  },
+  {
+    "ID": 21,
+    "Stationsname": "Wer war es",
+    "Standort": "-"
+  },
+  {
+    "ID": 22,
+    "Stationsname": "Uhrzeiträtsel",
+    "Standort": "-"
+  },
+  {
+    "ID": 23,
+    "Stationsname": "Welche Zahl bin ich?",
+    "Standort": "-"
+  },
+  {
+    "ID": 24,
+    "Stationsname": "Kobelspiel",
+    "Standort": "-"
+  },
+  {
+    "ID": 25,
+    "Stationsname": "Wortsalat",
+    "Standort": "-"
+  },
+  {
+    "ID": 26,
+    "Stationsname": "Auswendig lernen",
+    "Standort": "-"
+  },
+  {
+    "ID": 27,
+    "Stationsname": "Stempeljagd-Spiel",
+    "Standort": "-"
+  },
+  {
+    "ID": 28,
+    "Stationsname": "Wer hat das gesagt?",
+    "Standort": "-"
+  },
+  {
+    "ID": 29,
+    "Stationsname": "Emoji Filmrätsel",
+    "Standort": "-"
+  }
+]

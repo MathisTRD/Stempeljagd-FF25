@@ -39,7 +39,7 @@ function createGroups(stationCount) {
 }
 
 function adjustGroupCount(newCount) {
-    if (!Number.isInteger(newCount) || newCount < 1 || newCount > 20) {
+    if (!Number.isInteger(newCount) || newCount < 1 || newCount > 99) {
         return false;
     }
     const oldGroups = [...groups];
@@ -355,9 +355,13 @@ function createFinishedGroupHTML(group) {
 
 function createActiveGroupHTML(group, groupIndex) {
     const currentStation = group.currentStation;
+    const stationData = stations.find(s => s.Stationsname === currentStation);
+    const standort = stationData ? stationData.Standort : '-';
+    
     return `
         <h2>${group.name}</h2>
         <div class="station-name">${currentStation || '-'}</div>
+        ${currentStation ? `<div class="station-location">📍 ${standort}</div>` : ''}
         <div class="group-stats">
             <p><span class="status-free">${group.completedStations.length}</span> | 
                <span class="status-next">${group.skippedStations.length}</span> | 
