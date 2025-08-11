@@ -1,201 +1,176 @@
 [
   {
-    "ID":1,
-    "Stationsname":"Kreuzworträtsel",
-    "Author":"Annika Stevens",
-    "Standort":"Aula"
+    "ID": 1,
+    "Name": "Sehenswürdigkeiten",
+    "Author": "Andre",
+    "Standort": "Essensraum links"
   },
   {
-    "ID":2,
-    "Stationsname":"Bilderrätsel",
-    "Author":"Freya Gerke",
-    "Standort":"Bibliothek"
+    "ID": 2,
+    "Name": "Kreuzworträtsel",
+    "Author": "Annika",
+    "Standort": "Essensraum rechts"
   },
   {
-    "ID":3,
-    "Stationsname":"Mundartchallenge",
-    "Author":"Gerhard Schuh",
-    "Standort":"Pausenhof"
+    "ID": 3,
+    "Name": "Coding Rätsel",
+    "Author": "David",
+    "Standort": "Vor Zimmer 16 1.OG"
   },
   {
-    "ID":4,
-    "Stationsname":"Origami falten",
-    "Author":"Julia Deutsch",
-    "Standort":"Raum 201"
+    "ID": 4,
+    "Name": "Wörterrätsel",
+    "Author": "Dominik",
+    "Standort": "Billiardtisch"
   },
   {
-    "ID":5,
-    "Stationsname":"Irrgarten",
-    "Author":"Julia Deutsch",
-    "Standort":"Sporthalle"
+    "ID": 5,
+    "Name": "Zewener Mundart",
+    "Author": "Gerhard",
+    "Standort": "Kreuz draußen"
   },
   {
-    "ID":6,
-    "Stationsname":"Ratespiel",
-    "Author":"Kira Nieß",
-    "Standort":"Musikraum"
+    "ID": 6,
+    "Name": "Schloss knacken",
+    "Author": "Gerrit",
+    "Standort": "Gruppenraum Kicker"
   },
   {
-    "ID":7,
-    "Stationsname":"Foto-von-X",
-    "Author":"Kira Nieß",
-    "Standort":"Schulhof"
+    "ID": 7,
+    "Name": "Origami falten",
+    "Author": "Julia",
+    "Standort": "Kamin Unten"
   },
   {
-    "ID":8,
-    "Stationsname":"Marken-erraten",
-    "Author":"Leonie Köpke",
-    "Standort":"Cafeteria"
+    "ID": 8,
+    "Name": "Irrgarten",
+    "Author": "Julia",
+    "Standort": "Vor dem Essenraum Bänke"
   },
   {
-    "ID":9,
-    "Stationsname":"Buchstabenposition",
-    "Author":"Leonie Müller",
-    "Standort":"Computerraum"
+    "ID": 9,
+    "Name": "Bierddeckel raten",
+    "Author": "Kira",
+    "Standort": "Couches Foye"
   },
   {
-    "ID":10,
-    "Stationsname":"Lückentext",
-    "Author":"Lilly Weirich",
-    "Standort":"Raum 105"
+    "ID": 10,
+    "Name": "Foto machen",
+    "Author": "Kira",
+    "Standort": "Rätsel wand"
   },
   {
-    "ID":11,
-    "Stationsname":"Wer War es",
-    "Author":"Matthias Krämer",
-    "Standort":"Lehrerzimmer"
+    "ID": 11,
+    "Name": "Marken erraten",
+    "Author": "Leonie K.",
+    "Standort": "Draußen Rutsche"
   },
   {
-    "ID":12,
-    "Stationsname":"Imposter Word",
-    "Author":"Merlin Rielke",
-    "Standort":"Werkraum"
-  },
-
-  {
-    "ID":13,
-    "Stationsname":"Dartquiz",
-    "Author":"Merlin Weiser",
-    "Standort":"Keller"
+    "ID": 12,
+    "Name": "Buchstabenposition",
+    "Author": "Leonie M.",
+    "Standort": "Gruppenraum B"
   },
   {
-    "ID":14,
-    "Stationsname":"Memory Challenge",
-    "Author":"Sarah Klein",
-    "Standort":"Physikraum"
+    "ID": 13,
+    "Name": "Lückentext",
+    "Author": "Lilly",
+    "Standort": "Sitzecke oben"
   },
   {
-    "ID":15,
-    "Stationsname":"Sportquiz",
-    "Author":"Tom Weber",
-    "Standort":"Turnhalle"
+    "ID": 14,
+    "Name": "Wer War es",
+    "Author": "Matthias",
+    "Standort": "Gegenüber Turnhalle"
   },
   {
-    "ID":16,
-    "Stationsname":"Kunstprojekt",
-    "Author":"Lisa Müller",
-    "Standort":"Kunstraum"
+    "ID": 15,
+    "Name": "Imposter Wort",
+    "Author": "Merlin R.",
+    "Standort": "unter die Treppe"
   },
   {
-    "ID":17,
-    "Stationsname":"Zahlenrätsel",
-    "Author":"Mike Schmidt",
-    "Standort":"Mathebereich"
+    "ID": 16,
+    "Name": "Dartquiz",
+    "Author": "Merlin W.",
+    "Standort": "Basketballplatz"
   },
   {
-    "ID":18,
-    "Stationsname":"Chemie Experiment",
-    "Author":"Anna Fischer",
-    "Standort":"Chemielabor"
+    "ID": 17,
+    "Name": "gemalte Sprichwörter",
+    "Author": "Nele",
+    "Standort": "Wand vor Gruppenraum 01 oben"
   },
   {
-    "ID":19,
-    "Stationsname":"Geschichtstrivia",
-    "Author":"David König",
-    "Standort":"Geschichtsraum"
+    "ID": 18,
+    "Name": "Gegenstand Rätsel",
+    "Author": "Nils",
+    "Standort": "Tischtennisplatte"
   },
   {
-    "ID":20,
-    "Stationsname":"Puzzle Master",
-    "Author":"Emma Wagner",
-    "Standort":"Gruppenraum A"
+    "ID": 19,
+    "Name": "Wer war es",
+    "Author": "Pascal",
+    "Standort": "Innenhof"
   },
   {
-    "ID":21,
-    "Stationsname":"Logik Challenge",
-    "Author":"Ben Richter",
-    "Standort":"Gruppenraum B"
+    "ID": 20,
+    "Name": "Uhrzeiträtsel",
+    "Author": "Mathis",
+    "Standort": "tür von raum 04"
   },
   {
-    "ID":22,
-    "Stationsname":"Sprach-Quiz",
-    "Author":"Jana Hoffmann",
-    "Standort":"Sprachlabor"
+    "ID": 21,
+    "Name": "Welche Zahl bin ich?",
+    "Author": "Mathis",
+    "Standort": "Billiardtisch oben"
   },
   {
-    "ID":23,
-    "Stationsname":"Koordination",
-    "Author":"Max Braun",
-    "Standort":"Mehrzweckraum"
+    "ID": 22,
+    "Name": "Kobelspiel",
+    "Author": "Mathis",
+    "Standort": "Bank draußen"
   },
   {
-    "ID":24,
-    "Stationsname":"Teamwork Tower",
-    "Author":"Nina Bauer",
-    "Standort":"Dachterrasse"
+    "ID": 23,
+    "Name": "Wortsalat",
+    "Author": "Cedric",
+    "Standort": "Kamin links"
   },
   {
-    "ID":25,
-    "Stationsname":"Kreativ Workshop",
-    "Author":"Paul Neumann",
-    "Standort":"Bastelraum"
+    "ID": 24,
+    "Name": "Auswendig lernen",
+    "Author": "Gerrit",
+    "Standort": "Gruppenraum 01 Couches"
   },
   {
-    "ID":26,
-    "Stationsname":"Wissensduel",
-    "Author":"Sophie Kraus",
-    "Standort":"Medienraum"
+    "ID": 25,
+    "Name": "Stempeljagd-Spiel",
+    "Author": "Lennart",
+    "Standort": "Rezeption"
   },
   {
-    "ID":27,
-    "Stationsname":"Strategie Spiel",
-    "Author":"Felix Jung",
-    "Standort":"Spielecke"
+    "ID": 26,
+    "Name": "Wer hat das gesagt?",
+    "Author": "Cedric",
+    "Standort": "Turnhalle"
   },
   {
-    "ID":28,
-    "Stationsname":"Reaktionstest",
-    "Author":"Lena Schulze",
-    "Standort":"Eingangshalle"
+    "ID": 27,
+    "Name": "Emoji Filmrätsel",
+    "Author": "Cedric",
+    "Standort": "Haustür"
   },
   {
-    "ID":29,
-    "Stationsname":"Escape Room Mini",
-    "Author":"Tim Vogel",
-    "Standort":"Nebengebäude"
+    "ID": 28,
+    "Name": "Kartenhaus",
+    "Author": "Mathis",
+    "Standort": "Gruppenraum A"
   },
   {
-    "ID":30,
-    "Stationsname":"Geografie Quest",
-    "Author":"Marie Lange",
-    "Standort":"Erdkunderaum"
-  },
-  {
-    "ID":31,
-    "Stationsname":"Tech Challenge",
-    "Author":"Chris Zimmermann",
-    "Standort":"Technikraum"
-  },
-  {
-    "ID":32,
-    "Stationsname":"Musikrätsel",
-    "Author":"Julia Hartmann",
-    "Standort":"Bandraum"
-  },
-  {
-    "ID":33,
-    "Stationsname":"Finale Challenge",
-    "Author":"Marco Steiner",
-    "Standort":"Haupteingang"
+    "ID": 29,
+    "Name": "Erfindungen sortieren",
+    "Author": "Freya",
+    "Standort": "Gruppenraum 1. OG 01 Tisch"
   }
 ]
